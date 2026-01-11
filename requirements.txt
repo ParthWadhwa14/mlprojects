@@ -4,5 +4,7 @@ numpy
 seaborn
 scikit-learn
 jupyter
+catboost
+xgboost
 
--e .
+#-e .
