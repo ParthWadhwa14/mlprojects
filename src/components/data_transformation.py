@@ -1,4 +1,5 @@
 import sys
+import os
 from dataclasses import dataclass
 import numpy as np
 import pandas as pd
@@ -31,13 +32,12 @@ class DataTranformation:
             categorical_pipeline=Pipeline([
                 ("imputer",SimpleImputer(strategy="most_frequent")),
                 ("encoder",OneHotEncoder()),
-                ("scaler",StandardScaler())
             ])
             logging.info("numerical column encoding")
             logging.info("categorical column encoding")
             preprocessor=ColumnTransformer(
-                ["numerical pipeline",num_pipeline,numerical_columns],
-                ["categorical pipeline",categorical_pipeline,categorical_columns]
+               [ ("numerical pipeline",num_pipeline,numerical_columns),
+                ("categorical pipeline",categorical_pipeline,categorical_columns)]
 
             )
             return preprocessor
@@ -65,7 +65,7 @@ class DataTranformation:
             ]
             logging.info("Saving preprocessing object")
             save_object(
-                file_path=self.data_transformation_config.preprocessing_obj_file_path
+                file_path=self.data_transformation_config.preprocessing_obj_file_path,
                 obj=preprocessing_obj
             )
             return(
